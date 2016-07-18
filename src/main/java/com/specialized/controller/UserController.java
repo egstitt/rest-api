@@ -30,9 +30,8 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST) 
     public ResponseEntity<StatusDTO> create(@RequestBody @Valid User user) {
     	
-    	// TODO: actually create the user.
+    	// TODO: handle errors.
     	user = userRepository.save(user);
-
     	return ResponseEntity.status(HttpStatus.CREATED).body(new StatusDTO("success"));
     }
 }
