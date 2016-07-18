@@ -16,7 +16,7 @@ import com.specialized.model.User;
 import com.specialized.repository.UserRepository;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/users")
 public class UserController {
 
 	@Autowired
