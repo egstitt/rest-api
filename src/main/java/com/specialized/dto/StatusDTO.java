@@ -1,0 +1,20 @@
+package com.specialized.dto;
+
+public class StatusDTO {
+
+	public StatusDTO() {}
+	
+	public StatusDTO(String status) {
+		this.status = status;
+	}
+	
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+}
