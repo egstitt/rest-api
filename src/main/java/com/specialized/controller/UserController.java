@@ -24,23 +24,33 @@ public class UserController {
     
     @RequestMapping(method = RequestMethod.POST) 
     public ResponseEntity<StatusDTO> create(@RequestBody @Valid User user) {
-    	
-    	// TODO: handle errors.
     	user = userRepository.save(user);
+    	
+    	// TODO: add the link to the resource in the header.
+    	
     	return ResponseEntity.status(HttpStatus.CREATED).body(new StatusDTO("success"));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public User get(@PathVariable("id") long id) {
-        return userRepository.findOne(id);
-        
-        // TODO: handle errors (not found)
+    	
+    	// TODO: check for existing. Guess this is why I need to throw exceptions.
+
+//    	User user = userRepository.findOne(id);
+//    	if (user == null) {
+//    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
+//    	}
+
+    	return userRepository.findOne(id);
     }
     
     @RequestMapping(method = RequestMethod.PUT) 
-    public ResponseEntity<StatusDTO> update(@RequestBody @Valid User user) {
+    public ResponseEntity<StatusDTO> update(@RequestBody User user) {
     	
-    	// TODO: handle errors.
+    	if (user.getId() == null) {
+    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusDTO("id required"));
+    	}
+    	
     	user = userRepository.save(user);
     	return ResponseEntity.status(HttpStatus.OK).body(new StatusDTO("success"));
     }
@@ -48,7 +58,10 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<StatusDTO> delete(@PathVariable("id") long id) {
 
-    	// TODO: handle errors (doesn't exist)
+    	User user = userRepository.findOne(id);
+    	if (user == null) {
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
+    	}
     	
     	userRepository.delete(id);
     	return ResponseEntity.status(HttpStatus.OK).body(new StatusDTO("success"));

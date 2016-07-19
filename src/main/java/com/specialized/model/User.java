@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="sbc_user")
@@ -19,9 +20,11 @@ public class User {
     private String firstname;
     
     private String lastname;
-    
+
+    @Size(min=2, max=50)
     private String username;
     
+    @Size(min=8, max=50)
     private String password;
 
     public Long getId() {
