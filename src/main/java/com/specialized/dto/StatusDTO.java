@@ -8,6 +8,10 @@ public class StatusDTO {
 		this.status = status;
 	}
 	
+	public static StatusDTO success() {
+		return new StatusDTO("success");
+	}
+	
 	private String status;
 
 	public String getStatus() {

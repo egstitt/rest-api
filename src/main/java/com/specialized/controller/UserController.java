@@ -1,5 +1,7 @@
 package com.specialized.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,29 +23,60 @@ public class UserController {
 
 	@Autowired
     private UserRepository userRepository;
-    
+
+	/**
+	 * Create user.
+	 * 
+	 * @param user
+	 * @return
+	 */
     @RequestMapping(method = RequestMethod.POST) 
     public ResponseEntity<StatusDTO> create(@RequestBody @Valid User user) {
     	user = userRepository.save(user);
     	
     	// TODO: add the link to the resource in the header.
     	
-    	return ResponseEntity.status(HttpStatus.CREATED).body(new StatusDTO("success"));
+    	return ResponseEntity.status(HttpStatus.CREATED).body(StatusDTO.success());
     }
 
+    /**
+     * Get user by Id.
+     * 
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public User get(@PathVariable("id") long id) {
+    public ResponseEntity<?> get(@PathVariable("id") long id) {
     	
-    	// TODO: check for existing. Guess this is why I need to throw exceptions.
+    	// Make sure the user exists.
+    	User user = userRepository.findOne(id);
+    	if (user == null) {
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
+    	}
 
-//    	User user = userRepository.findOne(id);
-//    	if (user == null) {
-//    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
-//    	}
+    	return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
 
-    	return userRepository.findOne(id);
+    /**
+     * Get user list.
+     * 
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getList() {
+    	
+    	// TODO: filtering.
+    	
+    	List<User> users = (List<User>) userRepository.findAll();
+    	return ResponseEntity.status(HttpStatus.OK).body(users);
     }
     
+    /**
+     * Update user.
+     * 
+     * @param user
+     * @return
+     */
     @RequestMapping(method = RequestMethod.PUT) 
     public ResponseEntity<StatusDTO> update(@RequestBody User user) {
     	
@@ -52,18 +85,25 @@ public class UserController {
     	}
     	
     	user = userRepository.save(user);
-    	return ResponseEntity.status(HttpStatus.OK).body(new StatusDTO("success"));
+    	return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
     }
     
+    /**
+     * Delete user by Id.
+     * 
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<StatusDTO> delete(@PathVariable("id") long id) {
 
+    	// Make sure the user exists.
     	User user = userRepository.findOne(id);
     	if (user == null) {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
     	}
     	
     	userRepository.delete(id);
-    	return ResponseEntity.status(HttpStatus.OK).body(new StatusDTO("success"));
+    	return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
     }
 }

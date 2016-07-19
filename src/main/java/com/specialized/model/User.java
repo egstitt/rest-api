@@ -24,6 +24,7 @@ public class User {
     @Size(min=2, max=50)
     private String username;
     
+    // TODO: encrypt this shit and don't return it on GET.
     @Size(min=8, max=50)
     private String password;
 
