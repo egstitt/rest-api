@@ -1,4 +1,4 @@
-package com.specialized.dto;
+package com.myapi.dto;
 
 public class StatusDTO {
 

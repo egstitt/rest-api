@@ -1,8 +1,8 @@
-package com.specialized.repository;
+package com.myapi.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.specialized.model.User;
+import com.myapi.model.User;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
