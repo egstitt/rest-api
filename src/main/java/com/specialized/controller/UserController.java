@@ -32,6 +32,13 @@ public class UserController {
 	 */
     @RequestMapping(method = RequestMethod.POST) 
     public ResponseEntity<StatusDTO> create(@RequestBody @Valid User user) {
+    	
+    	// Check for existing.
+    	User existing = userRepository.findByUsername(user.getUsername());
+    	if (existing != null) {
+    		return ResponseEntity.status(HttpStatus.CONFLICT).body(new StatusDTO("user already exists"));
+    	}
+    	
     	user = userRepository.save(user);
     	
     	// TODO: add the link to the resource in the header.
@@ -83,7 +90,12 @@ public class UserController {
     	if (user.getId() == null) {
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusDTO("id required"));
     	}
-    	
+
+    	User existing = userRepository.findOne(user.getId());
+    	if (existing == null) {
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
+    	}
+
     	user = userRepository.save(user);
     	return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
     }
