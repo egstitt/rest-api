@@ -35,6 +35,9 @@ public class UserController {
     	
     	// Check for existing.
     	User existing = userRepository.findByUsername(user.getUsername());
+    	if (existing == null) {
+    		existing = userRepository.findByEmailAddress(user.getEmailAddress());
+    	}
     	if (existing != null) {
     		return ResponseEntity.status(HttpStatus.CONFLICT).body(new StatusDTO("user already exists"));
     	}
@@ -85,7 +88,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(method = RequestMethod.PUT) 
-    public ResponseEntity<StatusDTO> update(@RequestBody User user) {
+    public ResponseEntity<StatusDTO> update(@RequestBody @Valid User user) {
     	
     	if (user.getId() == null) {
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusDTO("id required"));

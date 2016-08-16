@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -14,7 +16,7 @@ public class User {
 
     @Id 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq_gen")
-    @SequenceGenerator(name = "users_seq_gen", sequenceName = "sbc_user_id_seq", allocationSize = 1, initialValue= 1)
+    @SequenceGenerator(name = "users_seq_gen", sequenceName = "sbc_user_id_seq", allocationSize = 1, initialValue = 1)
     private Long id;
     
     private String firstname;
@@ -23,6 +25,12 @@ public class User {
 
     @Size(min=2, max=50)
     private String username;
+    
+    @NotNull
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
+            + "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
+            + "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+    private String emailAddress;
     
     // TODO: encrypt this shit and don't return it on GET.
     @Size(min=8, max=50)
@@ -67,4 +75,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
 }
