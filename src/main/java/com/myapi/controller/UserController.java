@@ -1,10 +1,11 @@
 package com.myapi.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.myapi.dto.StatusDTO;
 import com.myapi.model.User;
@@ -31,7 +33,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(method = RequestMethod.POST) 
-    public ResponseEntity<StatusDTO> create(@RequestBody @Valid User user) {
+    public ResponseEntity<?> create(@RequestBody @Valid User user) {
 
         // Check for existing.
         User existing = userRepository.findByUsername(user.getUsername());
@@ -39,14 +41,16 @@ public class UserController {
             existing = userRepository.findByEmailAddress(user.getEmailAddress());
         }
         if (existing != null) {
+            // TODO: should throw an exception?
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new StatusDTO("user already exists"));
         }
 
         user = userRepository.save(user);
-
-        // TODO: add the link to the resource in the header.
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(StatusDTO.success());
+        
+        // Set the location header and return the response.
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri());
+        return new ResponseEntity<>(null, headers, HttpStatus.CREATED);
     }
 
     /**
@@ -68,17 +72,14 @@ public class UserController {
     }
 
     /**
-     * Get user list.
+     * Get paginated and sortable user list.
      * 
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getList() {
-
-        // TODO: filtering.
-
-        List<User> users = (List<User>) userRepository.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(users);
+    public ResponseEntity<?> getList(Pageable pageable) {
+        Page<User> page = userRepository.findAll(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
     /**
