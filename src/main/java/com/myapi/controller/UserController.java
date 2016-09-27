@@ -21,32 +21,32 @@ import com.myapi.repository.UserRepository;
 @RequestMapping(value = "/users")
 public class UserController {
 
-	@Autowired
+    @Autowired
     private UserRepository userRepository;
 
-	/**
-	 * Create user.
-	 * 
-	 * @param user
-	 * @return
-	 */
+    /**
+     * Create user.
+     * 
+     * @param user
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST) 
     public ResponseEntity<StatusDTO> create(@RequestBody @Valid User user) {
-    	
-    	// Check for existing.
-    	User existing = userRepository.findByUsername(user.getUsername());
-    	if (existing == null) {
-    		existing = userRepository.findByEmailAddress(user.getEmailAddress());
-    	}
-    	if (existing != null) {
-    		return ResponseEntity.status(HttpStatus.CONFLICT).body(new StatusDTO("user already exists"));
-    	}
-    	
-    	user = userRepository.save(user);
-    	
-    	// TODO: add the link to the resource in the header.
-    	
-    	return ResponseEntity.status(HttpStatus.CREATED).body(StatusDTO.success());
+
+        // Check for existing.
+        User existing = userRepository.findByUsername(user.getUsername());
+        if (existing == null) {
+            existing = userRepository.findByEmailAddress(user.getEmailAddress());
+        }
+        if (existing != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new StatusDTO("user already exists"));
+        }
+
+        user = userRepository.save(user);
+
+        // TODO: add the link to the resource in the header.
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(StatusDTO.success());
     }
 
     /**
@@ -57,14 +57,14 @@ public class UserController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> get(@PathVariable("id") long id) {
-    	
-    	// Make sure the user exists.
-    	User user = userRepository.findOne(id);
-    	if (user == null) {
-    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
-    	}
 
-    	return ResponseEntity.status(HttpStatus.OK).body(user);
+        // Make sure the user exists.
+        User user = userRepository.findOne(id);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     /**
@@ -74,13 +74,13 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getList() {
-    	
-    	// TODO: filtering.
-    	
-    	List<User> users = (List<User>) userRepository.findAll();
-    	return ResponseEntity.status(HttpStatus.OK).body(users);
+
+        // TODO: filtering.
+
+        List<User> users = (List<User>) userRepository.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(users);
     }
-    
+
     /**
      * Update user.
      * 
@@ -89,20 +89,20 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.PUT) 
     public ResponseEntity<StatusDTO> update(@RequestBody @Valid User user) {
-    	
-    	if (user.getId() == null) {
-    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusDTO("id required"));
-    	}
 
-    	User existing = userRepository.findOne(user.getId());
-    	if (existing == null) {
-    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
-    	}
+        if (user.getId() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusDTO("id required"));
+        }
 
-    	user = userRepository.save(user);
-    	return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
+        User existing = userRepository.findOne(user.getId());
+        if (existing == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
+        }
+
+        user = userRepository.save(user);
+        return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
     }
-    
+
     /**
      * Delete user by Id.
      * 
@@ -112,13 +112,13 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<StatusDTO> delete(@PathVariable("id") long id) {
 
-    	// Make sure the user exists.
-    	User user = userRepository.findOne(id);
-    	if (user == null) {
-    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
-    	}
-    	
-    	userRepository.delete(id);
-    	return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
+        // Make sure the user exists.
+        User user = userRepository.findOne(id);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
+        }
+
+        userRepository.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
     }
 }
