@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new StatusDTO("user already exists"));
         }
 
+        // Encrypt the password and save the user.
+        StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
+        user.setPassword(encoder.encode(user.getPassword()));
         user = userRepository.save(user);
         
         // Set the location header and return the response.
@@ -100,6 +104,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
         }
 
+        // TODO: copy properties from passed-in user to existing user and ignore password.
+        
         user = userRepository.save(user);
         return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
     }
