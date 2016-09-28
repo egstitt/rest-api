@@ -35,7 +35,7 @@ public class User {
             + "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
     private String emailAddress;
 
-    @Size(min=8, max=50)
+    @NotNull
     private String password;
 
     public Long getId() {

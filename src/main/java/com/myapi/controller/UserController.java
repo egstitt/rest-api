@@ -36,6 +36,11 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST) 
     public ResponseEntity<?> create(@RequestBody @Valid User user) {
 
+        // Validation.
+        if (user.getPassword().length() < 8) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusDTO("password must be at least 8 characters"));
+        }
+        
         // Check for existing.
         User existing = userRepository.findByUsername(user.getUsername());
         if (existing == null) {
@@ -104,8 +109,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
         }
 
-        // TODO: copy properties from passed-in user to existing user and ignore password.
-        
+        // Ignore password and save.
+        user.setPassword(existing.getPassword());
         user = userRepository.save(user);
         return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
     }
