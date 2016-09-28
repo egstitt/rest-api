@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.myapi.APIConstants;
 import com.myapi.dto.StatusDTO;
 import com.myapi.model.User;
 import com.myapi.repository.UserRepository;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = APIConstants.USER_SERVICE_PATH)
 public class UserController {
 
     @Autowired
