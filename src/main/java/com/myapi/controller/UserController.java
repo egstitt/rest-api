@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -44,13 +45,10 @@ public class UserController {
         
         // Check for existing.
         User existing = userRepository.findByUsername(user.getUsername());
-        if (existing == null) {
-            existing = userRepository.findByEmailAddress(user.getEmailAddress());
-        }
-        if (existing != null) {
-            // TODO: should throw an exception?
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new StatusDTO("user already exists"));
-        }
+        if (existing != null) throw new UserAlreadyExistsException(user.getUsername());
+
+        existing = userRepository.findByEmailAddress(user.getEmailAddress());
+        if (existing != null) throw new UserAlreadyExistsException(user.getEmailAddress());
 
         // Encrypt the password and save the user.
         StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
@@ -74,9 +72,7 @@ public class UserController {
 
         // Make sure the user exists.
         User user = userRepository.findOne(id);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
-        }
+        if (user == null) throw new UserNotFoundException(id); 
 
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
@@ -100,15 +96,8 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.PUT) 
     public ResponseEntity<StatusDTO> update(@RequestBody @Valid User user) {
-
-        if (user.getId() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusDTO("id required"));
-        }
-
         User existing = userRepository.findOne(user.getId());
-        if (existing == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
-        }
+        if (existing == null) throw new UserNotFoundException(user.getId()); 
 
         // Ignore password and save.
         user.setPassword(existing.getPassword());
@@ -126,12 +115,28 @@ public class UserController {
     public ResponseEntity<StatusDTO> delete(@PathVariable("id") long id) {
 
         // Make sure the user exists.
-        User user = userRepository.findOne(id);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StatusDTO("user not found"));
-        }
+        User existing = userRepository.findOne(id);
+        if (existing == null) throw new UserNotFoundException(id); 
 
         userRepository.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
+    }
+}
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
+class UserNotFoundException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
+    public UserNotFoundException(Long userId) {
+        super("could not find user '" + userId + "'.");
+    }
+}
+
+@ResponseStatus(HttpStatus.CONFLICT)
+class UserAlreadyExistsException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
+    public UserAlreadyExistsException(String user) {
+        super("user '" + user + "' already exists.");
     }
 }
