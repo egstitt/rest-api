@@ -1,6 +1,9 @@
 package com.myapi.controller;
 
+import java.util.Date;
+
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.myapi.APIConstants;
 import com.myapi.dto.StatusDTO;
+import com.myapi.exception.BadRequestException;
 import com.myapi.model.User;
 import com.myapi.repository.UserRepository;
 
@@ -53,6 +57,8 @@ public class UserController {
         // Encrypt the password and save the user.
         StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
         user.setPassword(encoder.encode(user.getPassword()));
+        user.setCreateDate(new Date());
+        user.setCreateUser(1L);
         user = userRepository.save(user);
         
         // Set the location header and return the response.
@@ -68,7 +74,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> get(@PathVariable("id") long id) {
+    public ResponseEntity<?> get(@PathVariable("id") @NotNull Long id) {
 
         // Make sure the user exists.
         User user = userRepository.findOne(id);
@@ -96,6 +102,8 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.PUT) 
     public ResponseEntity<StatusDTO> update(@RequestBody @Valid User user) {
+        if (user.getId() == null) throw new BadRequestException("Id required");
+        
         User existing = userRepository.findOne(user.getId());
         if (existing == null) throw new UserNotFoundException(user.getId()); 
 
@@ -112,7 +120,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<StatusDTO> delete(@PathVariable("id") long id) {
+    public ResponseEntity<StatusDTO> delete(@PathVariable("id") @NotNull Long id) {
 
         // Make sure the user exists.
         User existing = userRepository.findOne(id);
