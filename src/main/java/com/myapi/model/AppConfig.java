@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="t_app_config")
-public class AppConfig {
+public class AppConfig extends ModelBase {
 
     @Id 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "app_configs_seq_gen")

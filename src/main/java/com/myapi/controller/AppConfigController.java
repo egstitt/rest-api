@@ -1,5 +1,6 @@
 package com.myapi.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class AppConfigController {
         
         // Nuke and pave.
         appConfigRepository.deleteAll();
+        appConfig.setCreateDate(new Date());
+        appConfig.setCreateUser(1L);
         appConfig = appConfigRepository.save(appConfig);
 
         // Set the location header and return the response.
