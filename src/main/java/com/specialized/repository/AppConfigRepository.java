@@ -1,8 +1,8 @@
-package com.myapi.repository;
+package com.specialized.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.myapi.model.AppConfig;
+import com.specialized.model.AppConfig;
 
 public interface AppConfigRepository extends CrudRepository<AppConfig, Long> {
 

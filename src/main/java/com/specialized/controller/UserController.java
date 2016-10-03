@@ -1,4 +1,4 @@
-package com.myapi.controller;
+package com.specialized.controller;
 
 import java.util.Date;
 
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.myapi.APIConstants;
-import com.myapi.dto.StatusDTO;
-import com.myapi.exception.BadRequestException;
-import com.myapi.model.User;
-import com.myapi.repository.UserRepository;
+import com.specialized.APIConstants;
+import com.specialized.dto.StatusDTO;
+import com.specialized.exception.BadRequestException;
+import com.specialized.model.User;
+import com.specialized.repository.UserRepository;
 
 @RestController
 @RequestMapping(value = APIConstants.USER_SERVICE_PATH)

@@ -1,4 +1,4 @@
-package com.myapi.controller;
+package com.specialized.controller;
 
 import java.util.Date;
 import java.util.List;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.myapi.APIConstants;
-import com.myapi.model.AppConfig;
-import com.myapi.repository.AppConfigRepository;
+import com.specialized.APIConstants;
+import com.specialized.model.AppConfig;
+import com.specialized.repository.AppConfigRepository;
 
 @RestController
 @RequestMapping(value = APIConstants.APP_CONFIG_SERVICE_PATH)

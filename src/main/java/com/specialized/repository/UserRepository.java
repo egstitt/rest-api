@@ -1,8 +1,8 @@
-package com.myapi.repository;
+package com.specialized.repository;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.myapi.model.User;
+import com.specialized.model.User;
 
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
