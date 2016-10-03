@@ -14,12 +14,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name="t_user")
+@Table(name="sbc_user")
 public class User extends ModelBase {
 
     @Id 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq_gen")
-    @SequenceGenerator(name = "users_seq_gen", sequenceName = "user_id_seq", allocationSize = 1, initialValue = 1)
+    @SequenceGenerator(name = "users_seq_gen", sequenceName = "sbc_user_id_seq", allocationSize = 1, initialValue = 1)
     private Long id;
 
     private String firstname;

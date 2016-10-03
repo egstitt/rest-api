@@ -9,12 +9,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="t_app_config")
+@Table(name="sbc_app_config")
 public class AppConfig extends ModelBase {
 
     @Id 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "app_configs_seq_gen")
-    @SequenceGenerator(name = "app_configs_seq_gen", sequenceName = "app_config_id_seq", allocationSize = 1, initialValue = 1)
+    @SequenceGenerator(name = "app_configs_seq_gen", sequenceName = "sbc_app_config_id_seq", allocationSize = 1, initialValue = 1)
     @NotNull
     private Long id;
 
