@@ -1,3 +1,3 @@
-# spring-boot-api
+# ride-recorder-api
 
-RESTful API built using Spring Boot
+RESTful API for ride recorder built using Spring Boot
