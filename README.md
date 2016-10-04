@@ -9,7 +9,7 @@ If you plan to use Eclipse, use the `Java EE` one. It is also highly recommended
 
 ## How to set up the project locally
 
-You will need to download PostgreSQL and create a local database named `ride-recorder`. Ask @egstitt for the scripts to create the base database structure.
+You will need to download PostgreSQL and create a local database named `ride_recorder`. Ask @egstitt for the scripts to create the base database structure.
 
 Clone the repo with this command:   
 `git clone https://github.com/SpecializedBicycles/ride-recorder-api.git`
