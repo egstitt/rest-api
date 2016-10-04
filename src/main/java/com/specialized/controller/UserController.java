@@ -3,6 +3,8 @@ package com.specialized.controller;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,9 +43,7 @@ public class UserController {
     public ResponseEntity<?> create(@RequestBody @Valid User user) {
 
         // Validation.
-        if (user.getPassword().length() < 8) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusDTO("password must be at least 8 characters"));
-        }
+        if (StringUtils.length(user.getPassword()) < 8) throw new BadRequestException("Password must be 8 characters");
         
         // Check for existing.
         User existing = userRepository.findByUsername(user.getUsername());
@@ -104,9 +104,9 @@ public class UserController {
         User existing = userRepository.findOne(user.getId());
         if (existing == null) throw new UserNotFoundException(user.getId()); 
 
-        // Ignore password and save.
-        user.setPassword(existing.getPassword());
-        user = userRepository.save(user);
+        // Copy over editable properties and save.
+        BeanUtils.copyProperties(user, existing, "password", "createDate", "createUser");
+        existing = userRepository.save(existing);
         return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
     }
 

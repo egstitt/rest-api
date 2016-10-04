@@ -35,7 +35,6 @@ public class User extends ModelBase {
             + "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
     private String emailAddress;
 
-    @NotNull
     private String password;
 
     public Long getId() {
