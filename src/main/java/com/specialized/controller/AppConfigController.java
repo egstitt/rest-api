@@ -29,7 +29,6 @@ public class AppConfigController {
         
         // Nuke and pave.
         appConfigRepository.deleteAll();
-        appConfig.setCreateUser(1L);
         appConfig = appConfigRepository.save(appConfig);
 
         // Set the location header and return the response.
