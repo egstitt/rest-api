@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -16,6 +17,11 @@ public class ModelBase {
     
     @Column(name="create_user")
     private Long createUser;
+
+    @PrePersist
+    public void onCreate() {
+        this.createDate = new Date();
+    }
 
     public Date getCreateDate() {
         return createDate;

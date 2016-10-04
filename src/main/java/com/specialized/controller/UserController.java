@@ -1,7 +1,5 @@
 package com.specialized.controller;
 
-import java.util.Date;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -57,7 +55,6 @@ public class UserController {
         // Encrypt the password and save the user.
         StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setCreateDate(new Date());
         user.setCreateUser(1L);
         user = userRepository.save(user);
         
