@@ -55,7 +55,6 @@ public class UserController {
         // Encrypt the password and save the user.
         StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setCreateUser(1L);
         user = userRepository.save(user);
         
         // Set the location header and return the response.
