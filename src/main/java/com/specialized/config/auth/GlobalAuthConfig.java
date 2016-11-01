@@ -18,7 +18,7 @@ import com.specialized.repository.UserRepository;
  *
  */
 @Configuration
-public class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
+public class GlobalAuthConfig extends GlobalAuthenticationConfigurerAdapter {
 
     @Autowired
     UserRepository userRepository;
