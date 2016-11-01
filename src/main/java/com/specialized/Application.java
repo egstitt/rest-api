@@ -25,13 +25,13 @@ public class Application {
     }
     
     @Bean
-    public Docket api() { 
-        return new Docket(DocumentationType.SWAGGER_2)  
-          .select()                                  
-          .apis(RequestHandlerSelectors.basePackage("com.specialized.controller"))              
-          .paths(PathSelectors.any())                          
-          .build()
-          .apiInfo(apiInfo());
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+        		.select()
+        		.apis(RequestHandlerSelectors.basePackage("com.specialized.controller"))
+        		.paths(PathSelectors.any())
+        		.build()
+        		.apiInfo(apiInfo());
     }
     
     private ApiInfo apiInfo() {
@@ -39,7 +39,7 @@ public class Application {
                 .title("Ride Recorder API")
                 .description("RESTful API for the ride recorder application.")
                 .version("1.0")
-                .build();    
+                .build();
     }    
 
     public static void main(String[] args) {
