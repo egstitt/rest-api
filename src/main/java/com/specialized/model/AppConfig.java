@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="sbc_app_config")
+@Table(name="app_config")
 public class AppConfig extends ModelBase {
 
     @Id 

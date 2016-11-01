@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name="sbc_user")
+@Table(name="users")
 public class User extends ModelBase {
 
     @Id 
