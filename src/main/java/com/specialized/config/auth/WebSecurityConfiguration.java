@@ -1,4 +1,4 @@
-package com.specialized;
+package com.specialized.config.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.specialized.repository.UserRepository;
 
+/**
+ * Configuration of basic auth to use our User repository.
+ *
+ */
 @Configuration
 public class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 

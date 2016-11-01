@@ -1,4 +1,4 @@
-package com.specialized;
+package com.specialized.config.auth;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -6,7 +6,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /*
- * Sets up basic auth.
+ * Turns on basic auth for all requests.
+ * 
  */
 @Configuration
 @EnableWebSecurity

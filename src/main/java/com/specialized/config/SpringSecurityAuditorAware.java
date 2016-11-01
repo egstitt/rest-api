@@ -1,4 +1,4 @@
-package com.specialized;
+package com.specialized.config;
 
 import org.springframework.data.domain.AuditorAware;
 
