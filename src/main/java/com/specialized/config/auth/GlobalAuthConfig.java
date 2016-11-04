@@ -11,7 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.specialized.repository.UserRepository;
+import com.specialized.model.Account;
+import com.specialized.repository.AccountRepository;
 
 /**
  * Configuration of basic auth to use our User repository.
@@ -21,7 +22,7 @@ import com.specialized.repository.UserRepository;
 public class GlobalAuthConfig extends GlobalAuthenticationConfigurerAdapter {
 
     @Autowired
-    UserRepository userRepository;
+    AccountRepository accountRepository;
 
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
@@ -34,11 +35,11 @@ public class GlobalAuthConfig extends GlobalAuthenticationConfigurerAdapter {
 
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                com.specialized.model.User user = userRepository.findByUsername(username);
-                if (user == null) throw new UsernameNotFoundException("could not find the user '" + username + "'");
+                Account account = accountRepository.findByUsername(username);
+                if (account == null) throw new UsernameNotFoundException("could not find the user '" + username + "'");
                 return new User(
-                        user.getUsername(), 
-                        user.getPassword(), true, true, true, true,
+                        account.getUsername(), 
+                        account.getPassword(), true, true, true, true,
                         AuthorityUtils.createAuthorityList("USER"));
             }
         };

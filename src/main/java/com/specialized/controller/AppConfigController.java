@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.specialized.APIConstants;
 import com.specialized.model.AppConfig;
 import com.specialized.repository.AppConfigRepository;
 
 @RestController
-@RequestMapping(value = APIConstants.APP_CONFIG_SERVICE_PATH)
+@RequestMapping(value = "/configs")
 public class AppConfigController {
 
     @Autowired

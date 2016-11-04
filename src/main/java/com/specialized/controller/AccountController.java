@@ -20,51 +20,50 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.specialized.APIConstants;
 import com.specialized.dto.StatusDTO;
 import com.specialized.exception.BadRequestException;
-import com.specialized.model.User;
-import com.specialized.repository.UserRepository;
+import com.specialized.model.Account;
+import com.specialized.repository.AccountRepository;
 
 @RestController
-@RequestMapping(value = APIConstants.USER_SERVICE_PATH)
-public class UserController {
+@RequestMapping(value = "/accounts")
+public class AccountController {
 
     @Autowired
-    private UserRepository userRepository;
+    private AccountRepository accountRepository;
 
     /**
-     * Create user.
+     * Create account.
      * 
-     * @param user
+     * @param account
      * @return
      */
     @RequestMapping(method = RequestMethod.POST) 
-    public ResponseEntity<?> create(@RequestBody @Valid User user) {
+    public ResponseEntity<?> create(@RequestBody @Valid Account account) {
 
         // Validation.
-        if (StringUtils.length(user.getPassword()) < 8) throw new BadRequestException("Password must be 8 characters");
+        if (StringUtils.length(account.getPassword()) < 8) throw new BadRequestException("Password must be 8 characters");
         
         // Check for existing.
-        User existing = userRepository.findByUsername(user.getUsername());
-        if (existing != null) throw new UserAlreadyExistsException(user.getUsername());
+        Account existing = accountRepository.findByUsername(account.getUsername());
+        if (existing != null) throw new AccountAlreadyExistsException(account.getUsername());
 
-        existing = userRepository.findByEmailAddress(user.getEmailAddress());
-        if (existing != null) throw new UserAlreadyExistsException(user.getEmailAddress());
+        existing = accountRepository.findByEmailAddress(account.getEmailAddress());
+        if (existing != null) throw new AccountAlreadyExistsException(account.getEmailAddress());
 
-        // Encrypt the password and save the user.
+        // Encrypt the password and save the account.
         StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
-        user.setPassword(encoder.encode(user.getPassword()));
-        user = userRepository.save(user);
+        account.setPassword(encoder.encode(account.getPassword()));
+        account = accountRepository.save(account);
         
         // Set the location header and return the response.
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri());
+        headers.setLocation(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(account.getId()).toUri());
         return new ResponseEntity<>(null, headers, HttpStatus.CREATED);
     }
 
     /**
-     * Get user by Id.
+     * Get account by Id.
      * 
      * @param id
      * @return
@@ -72,45 +71,45 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> get(@PathVariable("id") @NotNull Long id) {
 
-        // Make sure the user exists.
-        User user = userRepository.findOne(id);
-        if (user == null) throw new UserNotFoundException(id); 
+        // Make sure the account exists.
+        Account account = accountRepository.findOne(id);
+        if (account == null) throw new AccountNotFoundException(id); 
 
-        return ResponseEntity.status(HttpStatus.OK).body(user);
+        return ResponseEntity.status(HttpStatus.OK).body(account);
     }
 
     /**
-     * Get paginated and sortable user list.
+     * Get paginated and sortable account list.
      * 
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getList(Pageable pageable) {
-        Page<User> page = userRepository.findAll(pageable);
+        Page<Account> page = accountRepository.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
     /**
-     * Update user.
+     * Update account.
      * 
-     * @param user
+     * @param account
      * @return
      */
     @RequestMapping(method = RequestMethod.PUT) 
-    public ResponseEntity<StatusDTO> update(@RequestBody @Valid User user) {
-        if (user.getId() == null) throw new BadRequestException("Id required");
+    public ResponseEntity<StatusDTO> update(@RequestBody @Valid Account account) {
+        if (account.getId() == null) throw new BadRequestException("Id required");
         
-        User existing = userRepository.findOne(user.getId());
-        if (existing == null) throw new UserNotFoundException(user.getId()); 
+        Account existing = accountRepository.findOne(account.getId());
+        if (existing == null) throw new AccountNotFoundException(account.getId()); 
 
         // Copy over editable properties and save.
-        BeanUtils.copyProperties(user, existing, "password", "createDate", "createUser");
-        existing = userRepository.save(existing);
+        BeanUtils.copyProperties(account, existing, "password", "createDate", "createUser");
+        existing = accountRepository.save(existing);
         return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
     }
 
     /**
-     * Delete user by Id.
+     * Delete account by Id.
      * 
      * @param id
      * @return
@@ -118,29 +117,29 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<StatusDTO> delete(@PathVariable("id") @NotNull Long id) {
 
-        // Make sure the user exists.
-        User existing = userRepository.findOne(id);
-        if (existing == null) throw new UserNotFoundException(id); 
+        // Make sure the account exists.
+        Account existing = accountRepository.findOne(id);
+        if (existing == null) throw new AccountNotFoundException(id); 
 
-        userRepository.delete(id);
+        accountRepository.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
     }
 }
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-class UserNotFoundException extends RuntimeException {
+class AccountNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public UserNotFoundException(Long userId) {
-        super("could not find user '" + userId + "'.");
+    public AccountNotFoundException(Long accountId) {
+        super("could not find account '" + accountId + "'.");
     }
 }
 
 @ResponseStatus(HttpStatus.CONFLICT)
-class UserAlreadyExistsException extends RuntimeException {
+class AccountAlreadyExistsException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public UserAlreadyExistsException(String user) {
-        super("user '" + user + "' already exists.");
+    public AccountAlreadyExistsException(String account) {
+        super("account '" + account + "' already exists.");
     }
 }

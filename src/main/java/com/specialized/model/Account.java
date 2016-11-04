@@ -14,8 +14,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name="users")
-public class User extends ModelBase {
+@Table(name="account")
+public class Account extends ModelBase {
 
     @Id 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq_gen")

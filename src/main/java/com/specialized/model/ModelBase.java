@@ -24,8 +24,8 @@ public class ModelBase {
     private Date createDate;
     
     @CreatedBy
-    @Column(name="create_user")
-    private Long createUser;
+    @Column(name="create_account")
+    private Long createAccount;
 
     @LastModifiedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss'Z'", timezone="GMT")
@@ -33,8 +33,8 @@ public class ModelBase {
     private Date updateDate;
     
     @LastModifiedBy
-    @Column(name="update_user")
-    private Long updateUser;
+    @Column(name="update_account")
+    private Long updateAccount;
     
     public Date getCreateDate() {
         return createDate;
@@ -44,12 +44,12 @@ public class ModelBase {
         this.createDate = createDate;
     }
 
-    public Long getCreateUser() {
-        return createUser;
+    public Long getCreateAccount() {
+        return createAccount;
     }
 
-    public void setCreateUser(Long createUser) {
-        this.createUser = createUser;
+    public void setCreateAccount(Long createAccount) {
+        this.createAccount = createAccount;
     }
 
     public Date getUpdateDate() {
@@ -60,11 +60,11 @@ public class ModelBase {
         this.updateDate = updateDate;
     }
 
-    public Long getUpdateUser() {
-        return updateUser;
+    public Long getUpdateAccount() {
+        return updateAccount;
     }
 
-    public void setUpdateUser(Long updateUser) {
-        this.updateUser = updateUser;
+    public void setUpdateAccount(Long updateAccount) {
+        this.updateAccount = updateAccount;
     }
 }
