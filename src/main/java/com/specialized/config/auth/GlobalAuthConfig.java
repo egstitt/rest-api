@@ -15,7 +15,7 @@ import com.specialized.model.Account;
 import com.specialized.repository.AccountRepository;
 
 /**
- * Configuration of basic auth to use our User repository.
+ * Configuration of basic auth to use our Account repository.
  *
  */
 @Configuration
