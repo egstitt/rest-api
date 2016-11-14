@@ -39,3 +39,19 @@ CREATE TABLE app_config (
     update_account integer
 );
 insert into app_config(id, version_number) values(1, '1.0');
+
+drop table if exists sensor_point;
+CREATE TABLE sensor_point (
+    id integer primary key,
+    time_stamp bigint,
+    acc_x numeric(30, 6),
+    acc_y numeric(30, 6),
+    acc_z numeric(30, 6),
+    gyr_x numeric(30, 6),
+    gyr_y numeric(30, 6),
+    gyr_z numeric(30, 6),
+    create_date timestamp without time zone,
+    create_account integer,
+    update_date timestamp without time zone,
+    update_account integer
+);
