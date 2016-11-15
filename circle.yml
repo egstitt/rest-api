@@ -1,0 +1,9 @@
+test:
+  override:
+    - echo "test"
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - ./deploy_prod.sh
