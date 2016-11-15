@@ -1,6 +1,13 @@
 package com.specialized.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+
+import com.specialized.model.Account;
+import com.specialized.repository.AccountRepository;
 
 /**
  * This is used for user audit columns.
@@ -8,11 +15,20 @@ import org.springframework.data.domain.AuditorAware;
  */
 public class SpringSecurityAuditorAware implements AuditorAware<Long> {
 
+    @Autowired
+    private AccountRepository accountRepository;
+    
     @Override
     public Long getCurrentAuditor() {
         
-        // TODO: pull the id of the authenticated user.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
-        return 1L;
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
+        }
+ 
+        String username = ((User) authentication.getPrincipal()).getUsername();
+        Account account = accountRepository.findByUsername(username);
+        return account.getId();
     }
 }
