@@ -33,7 +33,7 @@ public class SensorPointController {
 
         // TODO: validation of some kind.
         
-        sensorPointRepository.save(sensorPoint);
+        sensorPoint = sensorPointRepository.save(sensorPoint);
         
         // Set the location header and return the response.
         HttpHeaders headers = new HttpHeaders();
@@ -55,8 +55,7 @@ public class SensorPointController {
         SensorPoint sensorPoint = sensorPointRepository.findOne(id);
         if (sensorPoint == null) throw new SensorPointNotFoundException(id); 
 
-        List<SensorPoint> sensorPoints = (List<SensorPoint>) sensorPointRepository.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(sensorPoints);
+        return ResponseEntity.status(HttpStatus.OK).body(sensorPoint);
     }
 
     @RequestMapping(method = RequestMethod.GET)
