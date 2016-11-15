@@ -10,5 +10,5 @@ deployment:
   production:
     branch: master
     commands:
-      - mvn package
+      - mvn clean install
       - ./deploy_staging.sh
