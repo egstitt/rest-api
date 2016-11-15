@@ -58,3 +58,20 @@ CREATE TABLE sensor_point (
 );
 drop sequence if exists sbc_sensor_point_id_seq;
 create sequence sbc_sensor_point_id_seq;
+
+drop table if exists gps_point;
+CREATE TABLE gps_point (
+    id integer primary key,
+    time_stamp bigint,
+    lat numeric(30, 6),
+    lon numeric(30, 6),
+    speed numeric(30, 6),
+    elevation numeric(30, 6),
+    heading numeric(30, 6),
+    create_date timestamp without time zone,
+    create_account integer,
+    update_date timestamp without time zone,
+    update_account integer
+);
+drop sequence if exists sbc_gps_point_id_seq;
+create sequence sbc_gps_point_id_seq;
