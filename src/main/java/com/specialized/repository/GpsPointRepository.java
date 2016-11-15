@@ -1,9 +1,9 @@
 package com.specialized.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.specialized.model.GpsPoint;
 
-public interface GpsPointRepository extends CrudRepository<GpsPoint, Long> {
+public interface GpsPointRepository extends PagingAndSortingRepository<GpsPoint, Long> {
 
 }

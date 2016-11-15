@@ -6,6 +6,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,9 +61,9 @@ public class GpsPointController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getList() {
-        List<GpsPoint> gpsPoints = (List<GpsPoint>) gpsPointRepository.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(gpsPoints);
+    public ResponseEntity<?> getList(Pageable pageable) {
+        Page<GpsPoint> page =  gpsPointRepository.findAll(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 }
 
