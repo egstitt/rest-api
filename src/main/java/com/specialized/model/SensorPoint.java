@@ -14,11 +14,11 @@ public class SensorPoint extends ModelBase {
 
     @Id 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sensor_points_seq_gen")
-    @SequenceGenerator(name = "sensor_points_seq_gen", sequenceName = "sbc_sensor_points_id_seq", allocationSize = 1, initialValue = 1)
+    @SequenceGenerator(name = "sensor_points_seq_gen", sequenceName = "sbc_sensor_point_id_seq", allocationSize = 1, initialValue = 1)
     private Long id;
 
     @Column(name="time_stamp")
-    private Long time;
+    private Long timeStamp;
     
     @Column(name="acc_x")
     private float accX;
@@ -46,12 +46,12 @@ public class SensorPoint extends ModelBase {
         this.id = id;
     }
 
-    public Long getTime() {
-        return time;
+    public Long getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setTime(Long time) {
-        this.time = time;
+    public void setTimeStamp(Long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public float getAccX() {

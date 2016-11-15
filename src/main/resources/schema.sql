@@ -5,13 +5,11 @@ CREATE  TABLE users (
   enabled varchar not null default 1,
   primary key (username)
 );
-insert into users(username,password,enabled) values('steve','steve',true);
-insert into users(username,password,enabled) values('john','john',true);
+insert into users(username,password,enabled) values('bonjovi','burrito3',true);
 
 drop table if exists authorities;
 create table authorities(id integer primary key, username varchar(255), authority varchar(255), UNIQUE(username,authority));
-insert into authorities(id,username,authority) values(1,'steve','admin');
-insert into authorities(id,username,authority) values(2,'john','superadmin');
+insert into authorities(id,username,authority) values(1,'bonjovi','superadmin');
 
 drop table if exists account;
 CREATE TABLE account (
@@ -26,8 +24,9 @@ CREATE TABLE account (
     update_date timestamp without time zone,
     update_account integer
 );
-insert into account(id,username,password) values(1, 'steve','steve');
-insert into account(id,username,password) values(2, 'john','john');
+insert into account(id,username,password) values(1, 'bonjovi','burrito3');
+drop sequence if exists sbc_account_id_seq;
+create sequence sbc_account_id_seq;
 
 drop table if exists app_config;
 CREATE TABLE app_config (
@@ -39,6 +38,8 @@ CREATE TABLE app_config (
     update_account integer
 );
 insert into app_config(id, version_number) values(1, '1.0');
+drop sequence if exists sbc_app_config_id_seq;
+create sequence sbc_app_config_id_seq;
 
 drop table if exists sensor_point;
 CREATE TABLE sensor_point (
@@ -55,3 +56,5 @@ CREATE TABLE sensor_point (
     update_date timestamp without time zone,
     update_account integer
 );
+drop sequence if exists sbc_sensor_point_id_seq;
+create sequence sbc_sensor_point_id_seq;
