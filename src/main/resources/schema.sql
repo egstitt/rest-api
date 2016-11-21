@@ -75,3 +75,27 @@ CREATE TABLE gps_point (
 );
 drop sequence if exists sbc_gps_point_id_seq;
 create sequence sbc_gps_point_id_seq;
+
+drop table if exists bike_settings;
+CREATE TABLE bike_settings (
+    id integer primary key,
+    rider varchar(255),
+    rider_note varchar(1000),
+    accelerometer_rate integer,
+    gyroscope_rate integer,
+    gps_rate integer,
+    bike_names varchar(1000),
+    bike_sizes varchar(1000),
+    wheel_names varchar(1000),
+    tire_names varchar(1000),
+    date_property timestamp without time zone,
+    create_date timestamp without time zone,
+    create_account integer,
+    update_date timestamp without time zone,
+    update_account integer
+);
+drop sequence if exists bike_settings_id_seq;
+create sequence bike_settings_id_seq;
+insert into bike_settings(id, rider, accelerometer_rate, gyroscope_rate, gps_rate, bike_names, bike_sizes, wheel_names, tire_names)
+values(1, 'bonjovi', 50, 25, 1, 'Mighty BIke 2000,Super Bike 3000,Crazy Bike 205', '100,105,205', 'Round wheels,Square wheels', 'Cool tires,Super tires,Wow tires')
+

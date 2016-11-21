@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Table(name="app_config")
 public class AppConfig extends ModelBase {
 
-    @Id 
+    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "app_configs_seq_gen")
     @SequenceGenerator(name = "app_configs_seq_gen", sequenceName = "sbc_app_config_id_seq", allocationSize = 1, initialValue = 1)
     @NotNull
