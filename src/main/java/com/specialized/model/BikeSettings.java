@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.StringUtils;
+
 @Entity
 @Table(name="bike_settings")
 public class BikeSettings extends ModelBase {
@@ -105,35 +107,43 @@ public class BikeSettings extends ModelBase {
         this.gpsRate = gpsRate;
     }
 
-    public String getBikeNames() {
-        return bikeNames;
+    public String[] getBikeNames() {
+        if (bikeNames == null) 
+            return new String[]{};
+        return StringUtils.split(bikeNames, ",");
     }
 
-    public void setBikeNames(String bikeNames) {
-        this.bikeNames = bikeNames;
+    public void setBikeNames(String[] bikeNames) {
+        this.bikeNames = StringUtils.join(bikeNames, ",");
     }
 
-    public String getBikeSizes() {
-        return bikeSizes;
+    public String[] getBikeSizes() {
+        if (bikeSizes == null) 
+            return new String[]{};
+        return StringUtils.split(bikeSizes, ",");
     }
 
-    public void setBikeSizes(String bikeSizes) {
-        this.bikeSizes = bikeSizes;
+    public void setBikeSizes(String[] bikeSizes) {
+        this.bikeSizes = StringUtils.join(bikeSizes, ",");
     }
 
-    public String getWheelNames() {
-        return wheelNames;
+    public String[] getWheelNames() {
+        if (wheelNames == null) 
+            return new String[]{};
+        return StringUtils.split(wheelNames, ",");
     }
 
-    public void setWheelNames(String wheelNames) {
-        this.wheelNames = wheelNames;
+    public void setWheelNames(String[] wheelNames) {
+        this.wheelNames = StringUtils.join(wheelNames, ",");
     }
 
-    public String getTireNames() {
-        return tireNames;
+    public String[] getTireNames() {
+        if (tireNames == null) 
+            return new String[]{};
+        return StringUtils.split(tireNames, ",");
     }
 
-    public void setTireNames(String tireNames) {
-        this.tireNames = tireNames;
+    public void setTireNames(String[] tireNames) {
+        this.tireNames = StringUtils.join(tireNames, ",");
     }
 }
