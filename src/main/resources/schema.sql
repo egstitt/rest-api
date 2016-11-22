@@ -97,5 +97,6 @@ CREATE TABLE bike_settings (
 drop sequence if exists bike_settings_id_seq;
 create sequence bike_settings_id_seq;
 insert into bike_settings(id, rider, accelerometer_rate, gyroscope_rate, gps_rate, bike_names, bike_sizes, wheel_names, tire_names)
-values(1, 'bonjovi', 50, 25, 1, 'Mighty Bike 2000,Super Bike 3000,Crazy Bike 205', '100,105,205', 'Round wheels,Square wheels', 'Cool tires,Super tires,Wow tires')
+values(1, 'bonjovi', 50, 25, 1, 'Mighty Bike 2000,Super Bike 3000,Crazy Bike 205', '100,105,205', 'Round wheels,Square wheels', 'Cool tires,Super tires,Wow tires');
+select nextval('bike_settings_id_seq');
 
