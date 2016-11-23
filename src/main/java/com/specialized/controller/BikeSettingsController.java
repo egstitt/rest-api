@@ -19,7 +19,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.specialized.dto.StatusDTO;
 import com.specialized.exception.BadRequestException;
+import com.specialized.model.Account;
 import com.specialized.model.BikeSettings;
+import com.specialized.repository.AccountRepository;
 import com.specialized.repository.BikeSettingsRepository;
 
 @RestController
@@ -27,13 +29,22 @@ import com.specialized.repository.BikeSettingsRepository;
 public class BikeSettingsController {
     
     @Autowired
+    private AccountRepository accountRepository;
+    
+    @Autowired
     private BikeSettingsRepository bikeSettingsRepository;
     
     @RequestMapping(method = RequestMethod.POST) 
     public ResponseEntity<?> create(@RequestBody @Valid BikeSettings bikeSettings) {
 
-        // TODO: validation of some kind.
+        // Check for valid account.
+        Account account = accountRepository.findByUsername(bikeSettings.getRider());
+        if (account == null) throw new BadRequestException("Rider '" + bikeSettings.getRider() + "' does not have a valid account.");
 
+        // Check for existing.
+        BikeSettings existing = bikeSettingsRepository.findByRider(bikeSettings.getRider());
+        if (existing != null) throw new BikeSettingsAlreadyExistsException(bikeSettings.getRider());
+        
         bikeSettings = bikeSettingsRepository.save(bikeSettings);
         
         // Set the location header and return the response.
@@ -60,7 +71,7 @@ public class BikeSettingsController {
         if (existing == null) throw new BikeSettingsNotFoundException(bikeSettings.getId()); 
 
         // Copy over editable properties and save.
-        BeanUtils.copyProperties(bikeSettings, existing, "createDate", "createUser");
+        BeanUtils.copyProperties(bikeSettings, existing, "rider", "createDate", "createAccount");
         existing = bikeSettingsRepository.save(existing);
         return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
     }
@@ -89,3 +100,13 @@ class BikeSettingsNotFoundException extends RuntimeException {
         super("could not find bike settings for rider '" + rider + "'");
     }
 }
+
+@ResponseStatus(HttpStatus.CONFLICT)
+class BikeSettingsAlreadyExistsException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
+    public BikeSettingsAlreadyExistsException(String rider) {
+        super("bike settings for rider '" + rider + "' already exists.");
+    }
+}
+

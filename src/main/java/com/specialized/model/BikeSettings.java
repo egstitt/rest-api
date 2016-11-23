@@ -12,8 +12,6 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name="bike_settings")
 public class BikeSettings extends ModelBase {
@@ -109,79 +107,43 @@ public class BikeSettings extends ModelBase {
         this.gpsRate = gpsRate;
     }
 
-    @JsonIgnore
-    public String getBikeNames() {
-        return bikeNames;
-    }
-
-    public void setBikeNames(String bikeNames) {
-        this.bikeNames = bikeNames;
-    }
-
-    @JsonIgnore
-    public String getBikeSizes() {
-        return bikeSizes;
-    }
-
-    public void setBikeSizes(String bikeSizes) {
-        this.bikeSizes = bikeSizes;
-    }
-
-    @JsonIgnore
-    public String getWheelNames() {
-        return wheelNames;
-    }
-
-    public void setWheelNames(String wheelNames) {
-        this.wheelNames = wheelNames;
-    }
-
-    @JsonIgnore
-    public String getTireNames() {
-        return tireNames;
-    }
-
-    public void setTireNames(String tireNames) {
-        this.tireNames = tireNames;
-    }
-
-    public String[] getBikeNamesArray() {
+    public String[] getBikeNames() {
         if (bikeNames == null) 
             return new String[]{};
         return StringUtils.split(bikeNames, ",");
     }
 
-    public void setBikeNamesArray(String[] bikeNames) {
+    public void setBikeNames(String[] bikeNames) {
         this.bikeNames = StringUtils.join(bikeNames, ",");
     }
 
-    public String[] getBikeSizesArray() {
+    public String[] getBikeSizes() {
         if (bikeSizes == null) 
             return new String[]{};
         return StringUtils.split(bikeSizes, ",");
     }
 
-    public void setBikeSizesArray(String[] bikeSizes) {
+    public void setBikeSizes(String[] bikeSizes) {
         this.bikeSizes = StringUtils.join(bikeSizes, ",");
     }
 
-    public String[] getWheelNamesArray() {
+    public String[] getWheelNames() {
         if (wheelNames == null) 
             return new String[]{};
         return StringUtils.split(wheelNames, ",");
     }
 
-    public void setWheelNamesArray(String[] wheelNames) {
+    public void setWheelNames(String[] wheelNames) {
         this.wheelNames = StringUtils.join(wheelNames, ",");
     }
 
-    public String[] getTireNamesArray() {
+    public String[] getTireNames() {
         if (tireNames == null) 
             return new String[]{};
         return StringUtils.split(tireNames, ",");
     }
 
-    public void setTireNamesArray(String[] tireNames) {
+    public void setTireNames(String[] tireNames) {
         this.tireNames = StringUtils.join(tireNames, ",");
     }
 }

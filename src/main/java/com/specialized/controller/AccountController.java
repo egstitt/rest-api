@@ -103,7 +103,7 @@ public class AccountController {
         if (existing == null) throw new AccountNotFoundException(account.getId()); 
 
         // Copy over editable properties and save.
-        BeanUtils.copyProperties(account, existing, "password", "createDate", "createUser");
+        BeanUtils.copyProperties(account, existing, "password", "createDate", "createAccount");
         existing = accountRepository.save(existing);
         return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
     }
