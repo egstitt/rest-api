@@ -13,6 +13,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -36,6 +37,7 @@ public class ModelBase {
     @Column(name="update_account")
     private Long updateAccount;
     
+    @JsonIgnore
     public Date getCreateDate() {
         return createDate;
     }
@@ -44,6 +46,7 @@ public class ModelBase {
         this.createDate = createDate;
     }
 
+    @JsonIgnore
     public Long getCreateAccount() {
         return createAccount;
     }
@@ -52,6 +55,7 @@ public class ModelBase {
         this.createAccount = createAccount;
     }
 
+    @JsonIgnore
     public Date getUpdateDate() {
         return updateDate;
     }
@@ -60,6 +64,7 @@ public class ModelBase {
         this.updateDate = updateDate;
     }
 
+    @JsonIgnore
     public Long getUpdateAccount() {
         return updateAccount;
     }
