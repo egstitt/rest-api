@@ -12,11 +12,14 @@ import javax.persistence.Table;
 @Table(name="gps_point")
 public class GpsPoint extends ModelBase {
 
-    @Id 
+    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gps_points_seq_gen")
     @SequenceGenerator(name = "gps_points_seq_gen", sequenceName = "sbc_gps_point_id_seq", allocationSize = 1, initialValue = 1)
     private Long id;
 
+    @Column(name="ride_id")
+    private Long rideId;
+    
     @Column(name="time_stamp")
     private Long timeStamp;
 
@@ -89,5 +92,13 @@ public class GpsPoint extends ModelBase {
 
     public void setHeading(float heading) {
         this.heading = heading;
+    }
+
+    public Long getRideId() {
+        return rideId;
+    }
+
+    public void setRideId(Long rideId) {
+        this.rideId = rideId;
     }
 }

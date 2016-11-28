@@ -45,6 +45,7 @@ create sequence sbc_app_config_id_seq;
 drop table if exists sensor_point;
 CREATE TABLE sensor_point (
     id integer primary key,
+    ride_id integer,
     time_stamp bigint,
     acc_x numeric(30, 6),
     acc_y numeric(30, 6),
@@ -63,6 +64,7 @@ create sequence sbc_sensor_point_id_seq;
 drop table if exists gps_point;
 CREATE TABLE gps_point (
     id integer primary key,
+    ride_id integer,
     time_stamp bigint,
     lat numeric(30, 6),
     lon numeric(30, 6),

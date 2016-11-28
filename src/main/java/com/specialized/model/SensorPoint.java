@@ -17,6 +17,9 @@ public class SensorPoint extends ModelBase {
     @SequenceGenerator(name = "sensor_points_seq_gen", sequenceName = "sbc_sensor_point_id_seq", allocationSize = 1, initialValue = 1)
     private Long id;
 
+    @Column(name="ride_id")
+    private Long rideId;
+    
     @Column(name="time_stamp")
     private Long timeStamp;
     
@@ -100,5 +103,13 @@ public class SensorPoint extends ModelBase {
 
     public void setGyrZ(float gyrZ) {
         this.gyrZ = gyrZ;
+    }
+
+    public Long getRideId() {
+        return rideId;
+    }
+
+    public void setRideId(Long rideId) {
+        this.rideId = rideId;
     }
 }

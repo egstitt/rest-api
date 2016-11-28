@@ -1,5 +1,8 @@
 package com.specialized.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name="ride")
@@ -23,6 +30,12 @@ public class Ride extends ModelBase {
     @Column(name="mac_address")
     private String macAddress;
 
+    @Transient
+    private List<GpsPoint> gpsPoints = new ArrayList<GpsPoint>();
+
+    @Transient
+    private List<SensorPoint> sensorPoints = new ArrayList<SensorPoint>();
+    
     public Long getDateProperty() {
         return dateProperty;
     }
@@ -45,5 +58,25 @@ public class Ride extends ModelBase {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @JsonIgnore
+    public List<GpsPoint> getGpsPoints() {
+        return gpsPoints;
+    }
+
+    @JsonProperty
+    public void setGpsPoints(List<GpsPoint> gpsPoints) {
+        this.gpsPoints = gpsPoints;
+    }
+
+    @JsonIgnore
+    public List<SensorPoint> getSensorPoints() {
+        return sensorPoints;
+    }
+
+    @JsonProperty
+    public void setSensorPoints(List<SensorPoint> sensorPoints) {
+        this.sensorPoints = sensorPoints;
     }
 }
