@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.specialized.dto.StatusDTO;
 import com.specialized.exception.BadRequestException;
 import com.specialized.model.Account;
 import com.specialized.model.BikeSettings;
+import com.specialized.model.dto.StatusDTO;
 import com.specialized.repository.AccountRepository;
 import com.specialized.repository.BikeSettingsRepository;
 

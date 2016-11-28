@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.specialized.dto.StatusDTO;
 import com.specialized.model.SensorPoint;
+import com.specialized.model.dto.StatusDTO;
 import com.specialized.repository.SensorPointRepository;
 
 @RestController

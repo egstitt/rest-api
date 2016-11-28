@@ -1,4 +1,4 @@
-package com.specialized.dto;
+package com.specialized.model.dto;
 
 public class StatusDTO {
 

@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.specialized.dto.StatusDTO;
 import com.specialized.exception.BadRequestException;
 import com.specialized.model.Account;
+import com.specialized.model.dto.StatusDTO;
 import com.specialized.repository.AccountRepository;
 
 @RestController
