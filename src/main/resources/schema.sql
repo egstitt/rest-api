@@ -42,43 +42,6 @@ insert into app_config(id, version_number) values(1, '1.0');
 drop sequence if exists sbc_app_config_id_seq;
 create sequence sbc_app_config_id_seq;
 
-drop table if exists sensor_point;
-CREATE TABLE sensor_point (
-    id integer primary key,
-    ride_id integer,
-    time_stamp bigint,
-    acc_x numeric(30, 6),
-    acc_y numeric(30, 6),
-    acc_z numeric(30, 6),
-    gyr_x numeric(30, 6),
-    gyr_y numeric(30, 6),
-    gyr_z numeric(30, 6),
-    create_date timestamp without time zone,
-    create_account integer,
-    update_date timestamp without time zone,
-    update_account integer
-);
-drop sequence if exists sbc_sensor_point_id_seq;
-create sequence sbc_sensor_point_id_seq;
-
-drop table if exists gps_point;
-CREATE TABLE gps_point (
-    id integer primary key,
-    ride_id integer,
-    time_stamp bigint,
-    lat numeric(30, 6),
-    lon numeric(30, 6),
-    speed numeric(30, 6),
-    elevation numeric(30, 6),
-    heading numeric(30, 6),
-    create_date timestamp without time zone,
-    create_account integer,
-    update_date timestamp without time zone,
-    update_account integer
-);
-drop sequence if exists sbc_gps_point_id_seq;
-create sequence sbc_gps_point_id_seq;
-
 drop table if exists bike_settings;
 CREATE TABLE bike_settings (
     id integer primary key,
@@ -117,3 +80,68 @@ CREATE TABLE ride (
 drop sequence if exists sbc_ride_id_seq;
 create sequence sbc_ride_id_seq;
 
+drop table if exists sensor_point;
+drop table if exists acc_point;
+CREATE TABLE acc_point (
+    id integer primary key,
+    ride_id integer,
+    time_stamp bigint,
+    accx numeric(30, 6),
+    accy numeric(30, 6),
+    accz numeric(30, 6),
+    create_date timestamp without time zone,
+    create_account integer,
+    update_date timestamp without time zone,
+    update_account integer
+);
+drop sequence if exists sbc_sensor_point_id_seq;
+drop sequence if exists sbc_acc_point_id_seq;
+create sequence sbc_acc_point_id_seq;
+
+drop table if exists gps_point;
+CREATE TABLE gps_point (
+    id integer primary key,
+    ride_id integer,
+    time_stamp bigint,
+    lat numeric(30, 6),
+    lon numeric(30, 6),
+    speed numeric(30, 6),
+    elevation numeric(30, 6),
+    heading numeric(30, 6),
+    create_date timestamp without time zone,
+    create_account integer,
+    update_date timestamp without time zone,
+    update_account integer
+);
+drop sequence if exists sbc_gps_point_id_seq;
+create sequence sbc_gps_point_id_seq;
+
+drop table if exists reed_point;
+CREATE TABLE reed_point (
+    id integer primary key,
+    ride_id integer,
+    time_stamp bigint,
+    adc integer,
+    create_date timestamp without time zone,
+    create_account integer,
+    update_date timestamp without time zone,
+    update_account integer
+);
+drop sequence if exists sbc_reed_point_id_seq;
+create sequence sbc_reed_point_id_seq;
+
+drop table if exists gyro_point;
+CREATE TABLE gyro_point (
+    id integer primary key,
+    ride_id integer,
+    time_stamp bigint,
+    gyrx numeric(30, 6),
+    gyry numeric(30, 6),
+    gyrz numeric(30, 6),
+    create_date timestamp without time zone,
+    create_account integer,
+    update_date timestamp without time zone,
+    update_account integer
+);
+drop sequence if exists sbc_gyro_point_id_seq;
+create sequence sbc_gyro_point_id_seq;

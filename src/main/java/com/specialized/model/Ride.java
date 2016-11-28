@@ -31,10 +31,16 @@ public class Ride extends ModelBase {
     private String macAddress;
 
     @Transient
-    private List<GpsPoint> gpsPoints = new ArrayList<GpsPoint>();
+    private List<GpsPoint> gpsData = new ArrayList<GpsPoint>();
 
     @Transient
-    private List<SensorPoint> sensorPoints = new ArrayList<SensorPoint>();
+    private List<AccPoint> accData = new ArrayList<AccPoint>();
+    
+    @Transient
+    private List<GyroPoint> gyroData = new ArrayList<GyroPoint>();
+    
+    @Transient
+    private List<ReedPoint> reedData = new ArrayList<ReedPoint>();
     
     public Long getDateProperty() {
         return dateProperty;
@@ -61,22 +67,42 @@ public class Ride extends ModelBase {
     }
 
     @JsonIgnore
-    public List<GpsPoint> getGpsPoints() {
-        return gpsPoints;
+    public List<GpsPoint> getGpsData() {
+        return gpsData;
     }
 
     @JsonProperty
-    public void setGpsPoints(List<GpsPoint> gpsPoints) {
-        this.gpsPoints = gpsPoints;
+    public void setGpsData(List<GpsPoint> gpsData) {
+        this.gpsData = gpsData;
     }
 
     @JsonIgnore
-    public List<SensorPoint> getSensorPoints() {
-        return sensorPoints;
+    public List<AccPoint> getAccData() {
+        return accData;
     }
 
     @JsonProperty
-    public void setSensorPoints(List<SensorPoint> sensorPoints) {
-        this.sensorPoints = sensorPoints;
+    public void setAccData(List<AccPoint> accData) {
+        this.accData = accData;
+    }
+
+    @JsonIgnore
+    public List<GyroPoint> getGyroData() {
+        return gyroData;
+    }
+
+    @JsonProperty
+    public void setGyroData(List<GyroPoint> gyroData) {
+        this.gyroData = gyroData;
+    }
+
+    @JsonIgnore
+    public List<ReedPoint> getReedData() {
+        return reedData;
+    }
+
+    @JsonProperty
+    public void setReedData(List<ReedPoint> reedData) {
+        this.reedData = reedData;
     }
 }

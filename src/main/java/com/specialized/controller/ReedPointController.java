@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.specialized.model.GpsPoint;
-import com.specialized.repository.GpsPointRepository;
+import com.specialized.model.ReedPoint;
+import com.specialized.repository.ReedPointRepository;
 
 @RestController
-@RequestMapping(value = "/gps_points")
-public class GpsPointController {
+@RequestMapping(value = "/reed_points")
+public class ReedPointController {
 
     @Autowired
-    private GpsPointRepository gpsPointRepository;
-    
+    private ReedPointRepository reedPointRepository;
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getList(Pageable pageable, @RequestParam("rideId") @NotNull Long rideId) {
-        Page<GpsPoint> page =  gpsPointRepository.findByRideId(pageable, rideId);
+        Page<ReedPoint> page =  reedPointRepository.findByRideId(pageable, rideId);
         return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 }

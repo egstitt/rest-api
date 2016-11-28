@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.specialized.model.AccPoint;
 import com.specialized.model.GpsPoint;
+import com.specialized.model.GyroPoint;
+import com.specialized.model.ReedPoint;
 import com.specialized.model.Ride;
-import com.specialized.model.SensorPoint;
+import com.specialized.repository.AccPointRepository;
 import com.specialized.repository.GpsPointRepository;
+import com.specialized.repository.GyroPointRepository;
+import com.specialized.repository.ReedPointRepository;
 import com.specialized.repository.RideRepository;
-import com.specialized.repository.SensorPointRepository;
 
 @RestController
 @RequestMapping(value = "/rides")
@@ -27,10 +31,16 @@ public class RideController extends SBCController {
     private RideRepository rideRepository;
 
     @Autowired 
-    GpsPointRepository gpsPointRepository;
+    private GpsPointRepository gpsPointRepository;
     
     @Autowired
-    SensorPointRepository sensorPointRepository;
+    private AccPointRepository accPointRepository;
+    
+    @Autowired
+    private GyroPointRepository gyroPointRepository;
+    
+    @Autowired
+    private ReedPointRepository reedPointRepository;
     
     @RequestMapping(method = RequestMethod.POST) 
     public ResponseEntity<?> create(@RequestBody @Valid Ride ride) {
@@ -40,22 +50,36 @@ public class RideController extends SBCController {
         ride = rideRepository.save(ride);
         
         // Handle GPS points.
-        if (ride.getGpsPoints().size() > 0) {
-            for (GpsPoint gpsPoint : ride.getGpsPoints()) {
+        if (ride.getGpsData().size() > 0) {
+            for (GpsPoint gpsPoint : ride.getGpsData()) {
                 gpsPoint.setRideId(ride.getId());
             }
-            gpsPointRepository.save(ride.getGpsPoints());
+            gpsPointRepository.save(ride.getGpsData());
         }
         
-        // Handle sensor points.
-        if (ride.getSensorPoints().size() > 0) {
-            for (SensorPoint sensorPoint : ride.getSensorPoints()) {
-                sensorPoint.setRideId(ride.getId());
+        // Handle acc points.
+        if (ride.getAccData().size() > 0) {
+            for (AccPoint accPoint : ride.getAccData()) {
+                accPoint.setRideId(ride.getId());
             }
-            sensorPointRepository.save(ride.getSensorPoints());
+            accPointRepository.save(ride.getAccData());
         }
         
-        // TODO: handle the remaining ride child entities.
+        // Handle gyro points.
+        if (ride.getGyroData().size() > 0) {
+            for (GyroPoint gyroPoint : ride.getGyroData()) {
+                gyroPoint.setRideId(ride.getId());
+            }
+            gyroPointRepository.save(ride.getGyroData());
+        }
+        
+        // Handle reed points.
+        if (ride.getReedData().size() > 0) {
+            for (ReedPoint reedPoint : ride.getReedData()) {
+                reedPoint.setRideId(ride.getId());
+            }
+            reedPointRepository.save(ride.getReedData());
+        }
         
         return buildCreateResponse(ride);
     }
