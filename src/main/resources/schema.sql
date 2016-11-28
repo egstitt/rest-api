@@ -27,6 +27,7 @@ CREATE TABLE account (
 insert into account(id,username,password) values(1, 'bonjovi','burrito3');
 drop sequence if exists sbc_account_id_seq;
 create sequence sbc_account_id_seq;
+select nextval('sbc_account_id_seq');
 
 drop table if exists app_config;
 CREATE TABLE app_config (
@@ -95,8 +96,22 @@ CREATE TABLE bike_settings (
     update_account integer
 );
 drop sequence if exists bike_settings_id_seq;
-create sequence bike_settings_id_seq;
+drop sequence if exists sbc_bike_settings_id_seq;
+create sequence sbc_bike_settings_id_seq;
 insert into bike_settings(id, rider, accelerometer_rate, gyroscope_rate, gps_rate, bike_names, bike_sizes, wheel_names, tire_names)
 values(1, 'bonjovi', 50, 25, 1, 'Mighty Bike 2000,Super Bike 3000,Crazy Bike 205', '100,105,205', 'Round wheels,Square wheels', 'Cool tires,Super tires,Wow tires');
-select nextval('bike_settings_id_seq');
+select nextval('sbc_bike_settings_id_seq');
+
+drop table if exists ride;
+CREATE TABLE ride (
+    id integer primary key,
+    date_property bigint,
+    mac_address varchar(100),
+    create_date timestamp without time zone,
+    create_account integer,
+    update_date timestamp without time zone,
+    update_account integer
+);
+drop sequence if exists sbc_ride_id_seq;
+create sequence sbc_ride_id_seq;
 

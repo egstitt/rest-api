@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -55,7 +54,7 @@ public class SensorPointController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> get(@PathVariable("id") @NotNull Long id) {
         SensorPoint sensorPoint = sensorPointRepository.findOne(id);
-        if (sensorPoint == null) throw new SensorPointNotFoundException(id); 
+        if (sensorPoint == null) throw new EntityNotFoundException("could not find sensor point '" + id + "'."); 
 
         return ResponseEntity.status(HttpStatus.OK).body(sensorPoint);
     }
@@ -64,14 +63,5 @@ public class SensorPointController {
     public ResponseEntity<?> getList(Pageable pageable) {
         Page<SensorPoint> page = sensorPointRepository.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(page);
-    }
-}
-
-@ResponseStatus(HttpStatus.NOT_FOUND)
-class SensorPointNotFoundException extends RuntimeException {
-    private static final long serialVersionUID = 1L;
-
-    public SensorPointNotFoundException(Long id) {
-        super("could not find sensor point '" + id + "'.");
     }
 }

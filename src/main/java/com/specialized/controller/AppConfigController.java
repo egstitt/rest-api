@@ -3,22 +3,19 @@ package com.specialized.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.specialized.model.AppConfig;
 import com.specialized.repository.AppConfigRepository;
 
 @RestController
 @RequestMapping(value = "/configs")
-public class AppConfigController {
+public class AppConfigController extends SBCController {
 
     @Autowired
     private AppConfigRepository appConfigRepository;
@@ -29,11 +26,7 @@ public class AppConfigController {
         // Nuke and pave.
         appConfigRepository.deleteAll();
         appConfig = appConfigRepository.save(appConfig);
-
-        // Set the location header and return the response.
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(appConfig.getId()).toUri());
-        return new ResponseEntity<>(null, headers, HttpStatus.CREATED);
+        return buildCreateResponse(appConfig);
     }
     
     @RequestMapping(method = RequestMethod.GET)
@@ -41,17 +34,8 @@ public class AppConfigController {
         
         // Grab the latest. There can only be one. Should probably order by create time though to be safe.
         List<AppConfig> appConfigs = (List<AppConfig>) appConfigRepository.findAll();
-        if (appConfigs == null || appConfigs.size() == 0) throw new AppConfigNotFoundException();
+        if (appConfigs == null || appConfigs.size() == 0) throw new EntityNotFoundException("could not find app config.");
         
         return ResponseEntity.status(HttpStatus.OK).body(appConfigs.get(0));
-    }
-}
-
-@ResponseStatus(HttpStatus.NOT_FOUND)
-class AppConfigNotFoundException extends RuntimeException {
-    private static final long serialVersionUID = 1L;
-
-    public AppConfigNotFoundException() {
-        super("could not find app config");
     }
 }

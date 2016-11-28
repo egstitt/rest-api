@@ -17,8 +17,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class ModelBase {
+public abstract class ModelBase {
 
+    public abstract Long getId();
+    
     @CreatedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss'Z'", timezone="GMT")
     @Column(name="create_date")

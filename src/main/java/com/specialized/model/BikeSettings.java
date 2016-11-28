@@ -18,7 +18,7 @@ public class BikeSettings extends ModelBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bike_settings_seq_gen")
-    @SequenceGenerator(name = "bike_settings_seq_gen", sequenceName = "bike_settings_id_seq", allocationSize = 1, initialValue = 1)
+    @SequenceGenerator(name = "bike_settings_seq_gen", sequenceName = "sbc_bike_settings_id_seq", allocationSize = 1, initialValue = 1)
     private Long id;
 
     @Column(name="date_property")

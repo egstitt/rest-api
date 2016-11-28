@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name="account")
 public class Account extends ModelBase {
 
-    @Id 
+    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "accounts_seq_gen")
     @SequenceGenerator(name = "accounts_seq_gen", sequenceName = "sbc_account_id_seq", allocationSize = 1, initialValue = 1)
     private Long id;
