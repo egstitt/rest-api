@@ -97,7 +97,7 @@ public class RideController extends SBCController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getByMacAddress(@RequestParam("macAddress") @NotNull String macAddress) {
+    public ResponseEntity<?> getListByMacAddress(@RequestParam("macAddress") @NotNull String macAddress) {
 
         List<Ride> rides = rideRepository.findByMacAddress(macAddress);
         return ResponseEntity.status(HttpStatus.OK).body(rides);
