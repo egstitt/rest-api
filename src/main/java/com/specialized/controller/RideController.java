@@ -1,5 +1,7 @@
 package com.specialized.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.specialized.model.AccPoint;
@@ -91,5 +94,12 @@ public class RideController extends SBCController {
         if (ride == null) throw new EntityNotFoundException("could not find ride '" + id + "'.");
         
         return ResponseEntity.status(HttpStatus.OK).body(ride);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getByRider(@RequestParam("macAddress") @NotNull String macAddress) {
+
+        List<Ride> rides = rideRepository.findByMacAddress(macAddress);
+        return ResponseEntity.status(HttpStatus.OK).body(rides);
     }
 }
