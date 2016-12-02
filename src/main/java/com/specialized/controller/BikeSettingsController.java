@@ -1,24 +1,18 @@
 package com.specialized.controller;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
-import org.springframework.beans.BeanUtils;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.specialized.exception.BadRequestException;
-import com.specialized.model.Account;
 import com.specialized.model.BikeSettings;
-import com.specialized.model.dto.StatusDTO;
-import com.specialized.repository.AccountRepository;
 import com.specialized.repository.BikeSettingsRepository;
 
 @RestController
@@ -26,57 +20,24 @@ import com.specialized.repository.BikeSettingsRepository;
 public class BikeSettingsController extends SBCController {
     
     @Autowired
-    private AccountRepository accountRepository;
-    
-    @Autowired
     private BikeSettingsRepository bikeSettingsRepository;
     
     @RequestMapping(method = RequestMethod.POST) 
     public ResponseEntity<?> create(@RequestBody @Valid BikeSettings bikeSettings) {
-
-        // Check for valid account.
-        Account account = accountRepository.findByUsername(bikeSettings.getRider());
-        if (account == null) throw new BadRequestException("Rider '" + bikeSettings.getRider() + "' does not have a valid account.");
-
-        // Check for existing.
-        BikeSettings existing = bikeSettingsRepository.findByRider(bikeSettings.getRider());
-        if (existing != null) throw new EntityAlreadyExistsException("bike settings already exist for rider '" + bikeSettings.getRider() + "'.");
+        
+        // TODO: handle the case of a passed-in id. This should NOT update an existing one. Just null it out?
         
         bikeSettings = bikeSettingsRepository.save(bikeSettings);
         return buildCreateResponse(bikeSettings);
     }
     
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> get(@RequestParam("rider") @NotNull String rider) {
+    public ResponseEntity<?> get() {
+        List<BikeSettings> bikeSettingsList = bikeSettingsRepository.findAllByOrderByUpdateDateDesc();
+        if (bikeSettingsList == null || bikeSettingsList.size() == 0) {
+            throw new EntityNotFoundException("Bike settings not found.");
+        }
         
-        // Grab the bike settings for the given rider.
-        BikeSettings bikeSettings = bikeSettingsRepository.findByRider(rider);
-        if (bikeSettings == null) throw new EntityNotFoundException("could not find bike settings for rider '" + rider + "'");
-
-        return ResponseEntity.status(HttpStatus.OK).body(bikeSettings);
-    }
-    
-    @RequestMapping(method = RequestMethod.PUT) 
-    public ResponseEntity<StatusDTO> update(@RequestBody @Valid BikeSettings bikeSettings) {
-        if (bikeSettings.getId() == null) throw new BadRequestException("Id required");
-        
-        BikeSettings existing = bikeSettingsRepository.findOne(bikeSettings.getId());
-        if (existing == null) throw new EntityNotFoundException("could not find bike settings '" + bikeSettings.getId() + "'.");  
-
-        // Copy over editable properties and save.
-        BeanUtils.copyProperties(bikeSettings, existing, "rider", "createDate", "createAccount");
-        existing = bikeSettingsRepository.save(existing);
-        return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
-    }
-    
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<StatusDTO> delete(@PathVariable("id") @NotNull Long id) {
-
-        // Make sure the account exists.
-        BikeSettings existing = bikeSettingsRepository.findOne(id);
-        if (existing == null) throw new EntityNotFoundException("could not find bike settings '" + id + "'."); 
-
-        bikeSettingsRepository.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
-    }
+        return ResponseEntity.status(HttpStatus.OK).body(bikeSettingsList.get(0));
+    }    
 }

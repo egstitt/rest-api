@@ -24,20 +24,17 @@ public class BikeSettings extends ModelBase {
     @Column(name="date_property")
     private Date dateProperty;
     
-    @Column(name="rider")
-    private String rider;
-    
-    @Column(name="rider_note")
-    private String riderNote;
-    
-    @Column(name="accelerometer_rate")
-    private Integer accelerometerRate;
-    
-    @Column(name="gyroscope_rate")
-    private Integer gyroscopeRate;
+    @Column(name="sensor_rate")
+    private Integer sensorRate;
     
     @Column(name="gps_rate")
     private Integer gpsRate;
+
+    @Column(name="accelerometer_fsa")
+    private Integer accelerometerFSA;
+    
+    @Column(name="gyroscope_fsa")
+    private Integer gyroscopeFSA;
     
     @Column(name="bike_names")
     private String bikeNames;
@@ -65,38 +62,6 @@ public class BikeSettings extends ModelBase {
 
     public void setDateProperty(Date dateProperty) {
         this.dateProperty = dateProperty;
-    }
-
-    public String getRider() {
-        return rider;
-    }
-
-    public void setRider(String rider) {
-        this.rider = rider;
-    }
-
-    public String getRiderNote() {
-        return riderNote;
-    }
-
-    public void setRiderNote(String riderNote) {
-        this.riderNote = riderNote;
-    }
-
-    public Integer getAccelerometerRate() {
-        return accelerometerRate;
-    }
-
-    public void setAccelerometerRate(Integer accelerometerRate) {
-        this.accelerometerRate = accelerometerRate;
-    }
-
-    public Integer getGyroscopeRate() {
-        return gyroscopeRate;
-    }
-
-    public void setGyroscopeRate(Integer gyroscopeRate) {
-        this.gyroscopeRate = gyroscopeRate;
     }
 
     public Integer getGpsRate() {
@@ -145,5 +110,29 @@ public class BikeSettings extends ModelBase {
 
     public void setTireNames(String[] tireNames) {
         this.tireNames = StringUtils.join(tireNames, ",");
+    }
+
+    public Integer getSensorRate() {
+        return sensorRate;
+    }
+
+    public void setSensorRate(Integer sensorRate) {
+        this.sensorRate = sensorRate;
+    }
+
+    public Integer getAccelerometerFSA() {
+        return accelerometerFSA;
+    }
+
+    public void setAccelerometerFSA(Integer accelerometerFSA) {
+        this.accelerometerFSA = accelerometerFSA;
+    }
+
+    public Integer getGyroscopeFSA() {
+        return gyroscopeFSA;
+    }
+
+    public void setGyroscopeFSA(Integer gyroscopeFSA) {
+        this.gyroscopeFSA = gyroscopeFSA;
     }
 }
