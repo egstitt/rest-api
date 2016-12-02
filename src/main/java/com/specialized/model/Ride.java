@@ -12,9 +12,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 @Entity
 @Table(name="ride")
 public class Ride extends ModelBase {
@@ -66,42 +63,34 @@ public class Ride extends ModelBase {
         this.id = id;
     }
 
-    @JsonIgnore
     public List<GpsPoint> getGpsData() {
         return gpsData;
     }
 
-    @JsonProperty
     public void setGpsData(List<GpsPoint> gpsData) {
         this.gpsData = gpsData;
     }
 
-    @JsonIgnore
     public List<AccPoint> getAccData() {
         return accData;
     }
 
-    @JsonProperty
     public void setAccData(List<AccPoint> accData) {
         this.accData = accData;
     }
 
-    @JsonIgnore
     public List<GyroPoint> getGyroData() {
         return gyroData;
     }
 
-    @JsonProperty
     public void setGyroData(List<GyroPoint> gyroData) {
         this.gyroData = gyroData;
     }
 
-    @JsonIgnore
     public List<ReedPoint> getReedData() {
         return reedData;
     }
 
-    @JsonProperty
     public void setReedData(List<ReedPoint> reedData) {
         this.reedData = reedData;
     }

@@ -93,6 +93,19 @@ public class RideController extends SBCController {
         Ride ride = rideRepository.findOne(id);
         if (ride == null) throw new EntityNotFoundException("could not find ride '" + id + "'.");
         
+        // Populate child data.
+        List<GpsPoint> gpsData = gpsPointRepository.findByRideId(id);
+        ride.setGpsData(gpsData);
+        
+        List<AccPoint> accData = accPointRepository.findByRideId(id);
+        ride.setAccData(accData);
+        
+        List<GyroPoint> gyroData = gyroPointRepository.findByRideId(id);
+        ride.setGyroData(gyroData);
+        
+        List<ReedPoint> reedData = reedPointRepository.findByRideId(id);
+        ride.setReedData(reedData);
+        
         return ResponseEntity.status(HttpStatus.OK).body(ride);
     }
 
