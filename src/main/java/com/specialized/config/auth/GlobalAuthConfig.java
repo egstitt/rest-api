@@ -3,7 +3,6 @@ package com.specialized.config.auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -19,7 +18,7 @@ import com.specialized.repository.AccountRepository;
  * Configuration of basic auth to use our Account repository.
  *
  */
-@Configuration
+//@Configuration
 public class GlobalAuthConfig extends GlobalAuthenticationConfigurerAdapter {
 
     @Value("${io.url}")
@@ -46,7 +45,7 @@ public class GlobalAuthConfig extends GlobalAuthenticationConfigurerAdapter {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
                 
-                
+                // TODO: hit io.s.com and ask if the username is correct (?)
                 
                 Account account = accountRepository.findByUsername(username);
                 if (account == null) throw new UsernameNotFoundException("could not find the user '" + username + "'");
