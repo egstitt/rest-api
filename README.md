@@ -21,6 +21,8 @@ Navigate to the directory into which you cloned the repo and click 'Finish'.
 
 ## How to run the project locally
 
+You will need to add a file called `application.properties` under the directory `src/main/resources`. Ask @egstitt for the contents of this file.
+
 If you are using Eclipse, expand the `com.specialized` package, right-click on `Application.java` and choose `Run as...Java application`
 
 If you are not using Eclipse, you can run the project with `mvn spring-boot:run`.
