@@ -1,5 +1,6 @@
 package com.specialized.config.auth;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,8 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${auth.password}")
     private String password;
     
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser(username).password(password).roles("USER");
     }
     
@@ -33,21 +34,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .fullyAuthenticated()
         .and().httpBasic()
         .and().csrf().disable();
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }
