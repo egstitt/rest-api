@@ -1,7 +1,6 @@
 package com.specialized.config.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
@@ -18,14 +17,14 @@ import com.specialized.repository.AccountRepository;
 //@Configuration
 public class GlobalAuthConfig extends GlobalAuthenticationConfigurerAdapter {
 
-    @Value("${io.url}")
-    private String ioUrl;
-   
-    @Value("${io.username}")
-    private String ioUsername;
-    
-    @Value("${io.password}")
-    private String ioPassword;
+//    @Value("${io.url}")
+//    private String ioUrl;
+//   
+//    @Value("${io.username}")
+//    private String ioUsername;
+//    
+//    @Value("${io.password}")
+//    private String ioPassword;
     
     @Autowired
     AccountRepository accountRepository;
