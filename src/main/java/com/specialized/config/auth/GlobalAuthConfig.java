@@ -17,15 +17,6 @@ import com.specialized.repository.AccountRepository;
 //@Configuration
 public class GlobalAuthConfig extends GlobalAuthenticationConfigurerAdapter {
 
-//    @Value("${io.url}")
-//    private String ioUrl;
-//   
-//    @Value("${io.username}")
-//    private String ioUsername;
-//    
-//    @Value("${io.password}")
-//    private String ioPassword;
-    
     @Autowired
     AccountRepository accountRepository;
 

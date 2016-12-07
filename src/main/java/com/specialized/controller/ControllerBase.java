@@ -8,7 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.specialized.model.ModelBase;
 
-public class SBCController {
+public class ControllerBase {
 
     public ResponseEntity<?> buildCreateResponse(ModelBase model) {
 
@@ -33,6 +33,15 @@ class EntityAlreadyExistsException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     public EntityAlreadyExistsException(String message) {
+        super(message);
+    }
+}
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+class BadRequestException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
+    public BadRequestException(String message) {
         super(message);
     }
 }
