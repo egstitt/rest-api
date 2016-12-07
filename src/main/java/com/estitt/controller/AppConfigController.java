@@ -22,9 +22,6 @@ public class AppConfigController extends BaseController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody AppConfig appConfig) {
-
-        // Nuke and pave.     
-        appConfigRepository.deleteAll();
         appConfig = appConfigRepository.save(appConfig);
         return buildCreateResponse(appConfig);
     }     
@@ -32,8 +29,8 @@ public class AppConfigController extends BaseController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> get() {
 
-        // Grab the latest. There can only be one. Should probably order by create time though to be safe.
-        List<AppConfig> appConfigs = (List<AppConfig>) appConfigRepository.findAll();
+        // Grab the newest one and return it.
+        List<AppConfig> appConfigs = (List<AppConfig>) appConfigRepository.findAllByOrderByCreateDateDesc();
         if (appConfigs == null || appConfigs.size() == 0) throw new EntityNotFoundException("could not find app config.");
 
         return ResponseEntity.status(HttpStatus.OK).body(appConfigs.get(0));

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.estitt.model.Account;
-import com.estitt.model.dto.StatusDTO;
 import com.estitt.repository.AccountRepository;
 
 @RestController
@@ -87,7 +86,7 @@ public class AccountController extends BaseController {
      * @return
      */
     @RequestMapping(method = RequestMethod.PUT) 
-    public ResponseEntity<StatusDTO> update(@RequestBody @Valid Account account) {
+    public ResponseEntity<?> update(@RequestBody @Valid Account account) {
         if (account.getId() == null) throw new BadRequestException("Id required");
         
         Account existing = accountRepository.findOne(account.getId());
@@ -96,7 +95,7 @@ public class AccountController extends BaseController {
         // Copy over editable properties and save.
         BeanUtils.copyProperties(account, existing, "password", "createDate", "createAccount");
         existing = accountRepository.save(existing);
-        return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     /**
@@ -106,13 +105,13 @@ public class AccountController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<StatusDTO> delete(@PathVariable("id") @NotNull Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") @NotNull Long id) {
 
         // Make sure the account exists.
         Account existing = accountRepository.findOne(id);
         if (existing == null) throw new EntityNotFoundException("could not find account '" + id + "'."); 
 
         accountRepository.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body(StatusDTO.success());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }
