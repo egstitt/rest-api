@@ -1,11 +1,11 @@
-package com.specialized.repository;
+package com.estitt.repository;
 
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.specialized.model.Account;
+import com.estitt.model.Account;
 
 public interface AccountRepository extends PagingAndSortingRepository<Account, Long> {
 

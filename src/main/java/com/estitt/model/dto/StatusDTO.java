@@ -1,4 +1,4 @@
-package com.specialized.model.dto;
+package com.estitt.model.dto;
 
 public class StatusDTO {
 

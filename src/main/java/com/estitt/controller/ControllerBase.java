@@ -1,4 +1,4 @@
-package com.specialized.controller;
+package com.estitt.controller;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.specialized.model.ModelBase;
+import com.estitt.model.ModelBase;
 
 public class ControllerBase {
 

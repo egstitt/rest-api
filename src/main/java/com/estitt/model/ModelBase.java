@@ -1,4 +1,4 @@
-package com.specialized.model;
+package com.estitt.model;
 
 import java.util.Date;
 
