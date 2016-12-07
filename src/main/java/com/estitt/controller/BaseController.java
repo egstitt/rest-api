@@ -8,7 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.estitt.model.ModelBase;
 
-public class ControllerBase {
+public class BaseController {
 
     public ResponseEntity<?> buildCreateResponse(ModelBase model) {
 

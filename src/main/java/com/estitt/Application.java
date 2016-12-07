@@ -30,7 +30,7 @@ public class Application {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
         		.select()
-        		.apis(RequestHandlerSelectors.basePackage("com.specialized.controller"))
+        		.apis(RequestHandlerSelectors.basePackage("com.estitt.controller"))
         		.paths(PathSelectors.any())
         		.build()
         		.apiInfo(apiInfo());
@@ -38,8 +38,8 @@ public class Application {
     
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Ride Recorder API")
-                .description("RESTful API for the ride recorder application.")
+                .title("RESTful API")
+                .description("RESTful API built using Spring Boot.")
                 .version("1.0")
                 .build();
     }    

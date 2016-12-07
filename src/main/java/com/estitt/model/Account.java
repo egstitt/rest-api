@@ -19,7 +19,7 @@ public class Account extends ModelBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "accounts_seq_gen")
-    @SequenceGenerator(name = "accounts_seq_gen", sequenceName = "sbc_account_id_seq", allocationSize = 1, initialValue = 1)
+    @SequenceGenerator(name = "accounts_seq_gen", sequenceName = "account_id_seq", allocationSize = 1, initialValue = 1)
     private Long id;
 
     private String firstname;

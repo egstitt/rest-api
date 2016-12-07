@@ -1,6 +1,6 @@
 general:
   artifacts:
-    - "target/ride-recorder-api-0.1.0.jar"
+    - "target/rest-api-0.1.0.jar"
     
 test:
   override:
@@ -11,4 +11,4 @@ deployment:
     branch: master
     commands:
       - mvn clean install
-      - ./deploy_staging.sh
+      - ./deploy.sh
