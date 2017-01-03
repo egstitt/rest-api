@@ -20,18 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.estitt.model.Account;
 import com.estitt.repository.AccountRepository;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
+
 @RestController
 @RequestMapping(value = "/accounts")
 public class AccountController extends BaseController {
     @Autowired
     private AccountRepository accountRepository;
 
-    /**
-     * Create account.
-     * 
-     * @param account
-     * @return
-     */
+    @ApiOperation(value = "Create an account", notes = "Creates the given account")
     @RequestMapping(method = RequestMethod.POST) 
     public ResponseEntity<?> create(@RequestBody @Valid Account account) {
 
@@ -52,12 +52,7 @@ public class AccountController extends BaseController {
         return buildCreateResponse(account);
     }
 
-    /**
-     * Get account by Id.
-     * 
-     * @param id
-     * @return
-     */
+    @ApiOperation(value = "Find account by Id", response = Account.class)
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> get(@PathVariable("id") @NotNull Long id) {
 
@@ -68,23 +63,26 @@ public class AccountController extends BaseController {
         return ResponseEntity.status(HttpStatus.OK).body(account);
     }
 
-    /**
-     * Get paginated and sortable account list.
-     * 
-     * @return
-     */
+    @ApiOperation(value = "Find accounts",
+            notes = "Finds all accounts. Fully pageable and sortable",
+            response = Page.class)
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", dataType = "int", paramType = "query",
+                value = "Results page you want to retrieve (0..N)"),
+        @ApiImplicitParam(name = "size", dataType = "int", paramType = "query",
+                value = "Number of records per page."),
+        @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                value = "Sorting criteria in the format: property(,asc|desc). " +
+                        "Default sort order is ascending. " +
+                        "Multiple sort criteria are supported.")
+    })
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getList(Pageable pageable) {
+    public ResponseEntity<?> getList(@ApiIgnore Pageable pageable) {
         Page<Account> page = accountRepository.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
-    /**
-     * Update account.
-     * 
-     * @param account
-     * @return
-     */
+    @ApiOperation(value = "Update an account", notes = "Updates the given account")
     @RequestMapping(method = RequestMethod.PUT) 
     public ResponseEntity<?> update(@RequestBody @Valid Account account) {
         if (account.getId() == null) throw new BadRequestException("Id required");
@@ -98,12 +96,7 @@ public class AccountController extends BaseController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
-    /**
-     * Delete account by Id.
-     * 
-     * @param id
-     * @return
-     */
+    @ApiOperation(value = "Delete an account", notes = "Creates the account for the given account Id")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") @NotNull Long id) {
 
